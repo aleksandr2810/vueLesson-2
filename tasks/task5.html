@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.header {
+			display: flex;
+		}
+
+		.wrapper {
+			padding: 20px;
+			margin-bottom: 50px;
+		}
+
+		.gap {
+			padding-left: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<p>
+		Самостійно сформуйте масив даних та виведіть фрагмент на зразок поданого (дані не обов’язково повинні співпадати)
+	</p>
+	<hr>
+	<div id="app">
+			<div class="wrapper" v-for="obj in dataList" :key="obj.id">
+				<div class="header">
+					<img :src="obj.icon" alt="icon">
+					<div class="gap">
+						<div>{{obj.subTitle}}</div>
+						<a :href="obj.link">{{obj.link}}</a>
+					</div>
+				</div>
+				<h1>
+					{{obj.title}}
+				</h1>
+				<p>
+					{{obj.text}}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					dataList: [
+						{
+							id: 1,
+							icon: './../icon/instagram.png',
+							subTitle: 'instagram',
+							link: 'https://www.instagram.com/',
+							title: 'Instagram',
+							text: 'Create an account or log in to Instagram - A simple, fun & creative way to capture, edit & share photos, videos & messages with friends & family.'
+						},
+						{
+							id: 2,
+							icon: './../icon/spotify.png',
+							subTitle: 'spotify',
+							link: 'https://www.spotify.com/ua-uk/free/',
+							title: 'Spotify - Web Player: Music for everyone',
+							text: 'Spotify — це цифровий сервіс, який відкриває доступ до мільйонів пісен. Premium. Зареєструватися. Про нас'
+						},
+						{
+							id: 3,
+							icon: './../icon/whatsapp.png',
+							subTitle: 'whatsapp',
+							link: 'https://www.whatsapp.com/?lang=ru_RU',
+							title: 'Завантажити WhatsApp',
+							text: 'WhatsApp WebЗавантажити. Завантажити WhatsApp. Залишайтеся на зв\'язку у WhatsApp на всіх своїх пристроях, щоб мати змогу продовжити будь-яку бесіду з місця ...'
+						},
+						{
+							id: 1,
+							icon: './../icon/youtube.png',
+							subTitle: 'youtube',
+							link: 'https://www.youtube.com/',
+							title: 'YouTube: Главная',
+							text: 'Діліться відео з близькими та друзями по всьому світу.'
+						},
+					]
+				}
+			},
+			methods: {
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

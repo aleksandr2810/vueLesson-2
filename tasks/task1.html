@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.blue {
+			background-color: blue;
+		}
+
+		.red {
+			background-color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<p>
+		Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо ні, то:
+		1) якщо логін = Іван – колір повідомлення про помилку синій
+		2) якщо хтось інший, то колір повідомлення червоний
+	</p>
+	<div id="app">
+		<label>Login :
+			<input type="text" v-model="login">
+		</label>
+		<label>Login :
+			<input type="password" v-model="password">
+		</label>
+		<div v-if="isLoginValid">
+			<img src="./../smilie.jpg" width="200" alt="smile">
+		</div>
+		<div v-else :class="statusColor">
+			ERROR!!!
+		</div>
+	</div>
+	<script>
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					login: null,
+					password: null,
+				}
+			},
+			computed: {
+				statusColor() {
+					let currectClass
+					if (this.login === 'Ivan') currectClass = 'blue'
+					else currectClass = 'red'
+					return currectClass
+				},
+				isLoginValid() {
+					return this.password === '123' && this.login === 'ivan'
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

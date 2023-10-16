@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.content {
+			display: inline-flex;
+			gap: 25px;
+		}
+
+		.sector {
+			border: 1px solid black;
+			min-width: 300px;
+		}
+
+		.food {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
+</head>
+
+<body>
+	<p>
+		Задача. На кухню поступають замовлення. Спочатку ми додаємо їх у список “Очікують на виконання”, якщо повар
+		береться робити — замовлення переходить у список “Виконуються”, якщо замовлення виконано — переходить у список
+		“Готові до виносу”. Якщо натиснути на “Подано” - страва зникає з таблиці
+
+		Підказка: тут треба зберігати 3 масиви страв ( waitingList, processingList, completedList)
+	</p>
+	<hr>
+	<div id="app">
+		<label>Нова замовлена страва
+			<input type="text" v-model="newMeal">
+		</label>
+		<button @click="added">Додати</button>
+		<br>
+		<div class="content">
+			<div class="sector">
+				<h2>Очікують на виконання</h2>
+				<hr>
+				<div class="food" v-for="(food, index) in waitingList" :key="index">
+					<div>{{food}}</div>
+					<button @click="cook(index)">Готувати</button>
+				</div>
+			</div>
+			<div class="sector">
+				<h2>Виконуються</h2>
+				<hr>
+				<div class="food" v-for="(food, i) in processingList" :key="i">
+					<div>{{food}}</div>
+					<button @click="cooked(i)">Приготовлено</button>
+				</div>
+			</div>
+			<div class="sector">
+				<h2>Готові до виносу</h2>
+				<hr>
+				<div class="food" v-for="(food, i) in completedList" :key="i">
+					<div>{{food}}</div>
+					<button @click="submitted(i)">Подано</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					newMeal: null,
+					waitingList: [],
+					processingList: [],
+					completedList: [],
+				}
+			},
+			methods: {
+				added() {
+					this.waitingList.push(this.newMeal)
+					this.newMeal = null
+				},
+				cook(index) {
+					this.processingList.push(this.waitingList[index])
+					this.waitingList.splice(index, 1)
+				},
+				cooked(i) {
+					this.completedList.push(this.processingList[i])
+					this.processingList.splice(i, 1)
+				},
+				submitted(i) {
+					this.completedList.splice(i, 1)
+				},
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

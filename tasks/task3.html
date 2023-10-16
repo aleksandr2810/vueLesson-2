@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.green {
+			border: 1px solid green;
+		}
+	
+		.red {
+			border: 1px solid red;
+		}
+		.content {
+			display: inline-block;
+		}
+	</style>
+</head>
+
+
+<body>
+	<p>
+		Елемент тренажера англійської. Виводимо зображення елемента і слово. Користувач вводить відповідь. Якщо вірно –
+		відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), якщо ні - то відтворюємо фразу
+		«Невірно, спробуйте ще раз» (і додаємо червону рамку).
+	</p>
+	<div id="app">
+		<div class="content" :class="{ 'green': isWorker, 'red': isNotWorker }">
+			<div v-for="elem in translate">
+				<img :src=elem.imageSrc width="150">
+				<div>{{elem.english}}</div>
+				<label>Ваш переклад
+					<input type="text" v-model="value">
+				</label>
+				<button @click="check">Перевірити</button>
+				<div v-if="working">Добре. Молодець!</div>
+				<div v-if="notWorking">Невірно, спробуйте ще раз</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					working: null,
+					notWorking: null,
+					value: null,
+					translate: [
+						{
+							id: 1,
+							english: 'book',
+							ukr: 'книга',
+							imageSrc:
+								'https://cdn5.vectorstock.com/i/1000x1000/10/04/a-book-vector-20321004.jpg',
+						},
+					],
+				}
+			},
+			computed: {
+				isWorker() {
+					return this.working
+				},
+				isNotWorker() {
+					return this.notWorking
+				}
+			},
+			methods: {
+				check() {
+					if(this.value === this.translate[0].ukr) this.working = true, this.notWorking = null
+					else this.notWorking = true, this.working = null
+				}
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

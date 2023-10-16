@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+<style>
+	.business-class {
+		background-image: url(./../passengers-on-a-flight.jpg);
+		background-size: contain;
+		background-repeat: no-repeat;
+		height: 250px;
+		color: white;
+	}
+	.econom-class {
+		background-image: url(./../nature.jpeg);
+		background-size: contain;
+		background-repeat: no-repeat;
+		height: 300px;
+		color: rgb(25, 224, 7);
+	}
+</style>
+
+<body>
+	<p>
+		З випадаючого списку вибираємо клас квитка у літаку. Якщо
+		1) бізнес - виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску
+		(так/ні)), на фоні зображення бізнес кают
+		2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.
+	</p>
+	<hr>
+	<div id="app">
+		<label> Вибери клас квитка:
+			<input v-model="classTicket" list="ticket">
+			<datalist id="ticket">
+				<option value="business" />
+				<option value="econom" />
+			</datalist>
+		</label>
+		<div>
+			<template v-if="isBusiness">
+				<div class="business-class">
+					<label>Вибери газету чи коньяк?
+						<input v-model="business" list="business">
+						<datalist id="business">
+							<option value="newspaper" />
+							<option value="cognac" />
+						</datalist>
+					</label>
+				</div>
+			</template>
+			<template v-if="isEconom">
+				<form class="econom-class">
+					<p>Вибери яке пиво та чипси?</p>
+					<div>
+						<input type="radio" id="contactChoice1"/>
+						<label for="contactChoice1">light</label>
+	
+						<input type="radio" id="contactChoice2"/>
+						<label for="contactChoice2">dark</label>
+
+						<input type="radio" id="contactChoice3"/>
+						<label for="contactChoice3">chips</label>
+					</div>
+					<div>
+						<button type="submit">Заказати</button>
+					</div>
+				</form>
+			</template>
+		</div>
+		<template v-if="isCognac">
+			<form>
+				<p>Пропоную вам закуску?:</p>
+				<div>
+					<input type="radio" id="contactChoice1" name="contact"/>
+					<label for="contactChoice1">Yes</label>
+
+					<input type="radio" id="contactChoice2" name="contact"/>
+					<label for="contactChoice2">No</label>
+				</div>
+				<div>
+					<button type="submit">Заказати</button>
+				</div>
+			</form>
+		</template>
+	</div>
+
+	<script>
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					classTicket: null,
+					business: null,
+					newspaper: 'newspaper',
+					cognac: 'cognac',
+				}
+			},
+			computed: {
+				isEconom() {
+					return this.classTicket === 'econom'
+				},
+				isCognac() {
+					return this.business === 'cognac'
+				},
+				isBusiness() {
+					return this.classTicket === 'business'
+				}
+			},
+			methods: {
+				onResult() {
+
+				},
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>
